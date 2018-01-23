@@ -30,7 +30,7 @@ repositories {
   mavenCentral()
 }
 
-configurations { codacy }
+//configurations { codacy }
 
 
 springBoot  { buildInfo() }
@@ -73,9 +73,9 @@ dependencies {
   testCompile('com.h2database:h2')
 
 
-  codacy group: 'com.codacy', name: 'codacy-coverage-reporter', version: '2.0.1'
-  codacy group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
-  codacy group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+  //codacy group: 'com.codacy', name: 'codacy-coverage-reporter', version: '2.0.1'
+  //codacy group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+  //codacy group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
   
 }
 
@@ -158,16 +158,16 @@ jacocoTestReport {
 test.finalizedBy jacocoTestReport
 
 
-task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport, group:"verification") {
-  main = "com.codacy.CodacyCoverageReporter"
-  def token = project.getProperties().get("CODACY_PROJECT_TOKEN") ?: "NOT SET"
-  classpath = configurations.codacy
-  args = [
-    "-l",
-    "Java",
-    "-r",
-    "${buildDir}/reports/jacoco/test/jacocoTestReport.xml",
-    "--projectToken",
-    "${token}"
-  ]
-}
+//task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport, group:"verification") {
+//  main = "com.codacy.CodacyCoverageReporter"
+//  def token = project.getProperties().get("CODACY_PROJECT_TOKEN") ?: "NOT SET"
+//  classpath = configurations.codacy
+//  args = [
+//    "-l",
+//    "Java",
+//    "-r",
+//    "${buildDir}/reports/jacoco/test/jacocoTestReport.xml",
+//    "--projectToken",
+//    "${token}"
+//  ]
+//}

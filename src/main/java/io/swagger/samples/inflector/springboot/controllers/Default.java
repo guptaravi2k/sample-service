@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import io.swagger.inflector.models.RequestContext;
 import io.swagger.inflector.models.ResponseContext;
 import io.swagger.samples.inflector.springboot.models.RootResource;
+import io.swagger.samples.inflector.springboot.models.UserResource;
 import net.minidev.json.JSONObject;
 
 @Component
@@ -20,6 +21,9 @@ public class Default {
 
   @Autowired
   RootResource root;
+
+  @Autowired
+  UserResource ur;
 
   public ResponseContext getApiRoot(RequestContext requestContext) {
     ResponseContext rval = new ResponseContext().status(Status.OK).entity(new JSONObject());
@@ -30,6 +34,7 @@ public class Default {
   }
 
   public ResponseContext getUserDetails(RequestContext request) {
-    return new ResponseContext().status(Status.NOT_IMPLEMENTED);
+
+    return new ResponseContext().status(Status.OK).entity(ur);
   }
 }

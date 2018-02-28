@@ -19,12 +19,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.swagger.samples.inflector.springboot.client.SampleServiceClient;
+import io.swagger.samples.inflector.springboot.client.rest.RestResource;
 import io.swagger.samples.inflector.springboot.models.Resource;
 import io.swagger.samples.inflector.springboot.models.UserResource;
 
@@ -96,13 +99,26 @@ public class StepDefs {
   public void iLlGetTheFollowingUserDetails(Map<String, String> expectedUserDetails)
       throws Throwable {
     try {
-      UserResource ur = (UserResource) resource;
+      UserResource ur ;
+      if (resource instanceof RestResource) {
+        ObjectMapper objectMapper = new ObjectMapper();
 
+        //convert json string to object
+        ur = objectMapper.readValue(((RestResource) resource).getData().toJSONString(), UserResource.class);
+      } else {
+        ur = (UserResource) resource;
+      }
       for (Entry<String, String> entry : expectedUserDetails.entrySet()) {
         switch (entry.getKey()) {
         case "Surname":
           assertThat(ur.getSurname(), equalTo(entry.getValue()));
-          break;
+            break;
+          case "GivenName":
+            assertThat(ur.getGivenname(), equalTo(entry.getValue()));
+            break;
+          case "DoB":
+            assertThat(ur.getDob(), equalTo(entry.getValue()));
+            break;
         default:
           throw new PendingException("TODO: user details - " + entry.getKey());
         }

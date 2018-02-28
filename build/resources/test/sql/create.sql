@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS UserDetails (
+	Name VARCHAR(40),
+	DoB VARCHAR(12)
+);

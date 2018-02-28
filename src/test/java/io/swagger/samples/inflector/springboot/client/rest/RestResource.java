@@ -32,4 +32,9 @@ public class RestResource implements Resource {
 		return splitHeaders.stream().map(linkString -> Link.valueOf(linkString)).collect(Collectors.toList());
 	}
 
+
+	public JSONObject getData() {
+		return response.getBody();
+	}
+
 }
